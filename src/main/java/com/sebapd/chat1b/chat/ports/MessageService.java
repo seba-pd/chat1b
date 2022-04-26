@@ -4,8 +4,6 @@ import com.sebapd.chat1b.chat.domain.ChatMessage;
 
 public interface MessageService {
 
-    ChatMessage getById(Long id);
-
-    void send(ChatMessage message);
+    void send(ChatMessage message, String channelName);
 
 }
