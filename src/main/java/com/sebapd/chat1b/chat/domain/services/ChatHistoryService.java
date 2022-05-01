@@ -1,6 +1,6 @@
 package com.sebapd.chat1b.chat.domain.services;
 
-import com.sebapd.chat1b.chat.domain.ChatMessage;
+import com.sebapd.chat1b.chat.domain.Message;
 import com.sebapd.chat1b.chat.ports.HistoryService;
 import com.sebapd.chat1b.chat.ports.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ public class ChatHistoryService implements HistoryService {
     private final MessageRepository messageRepository;
 
     @Override
-    public List<ChatMessage> getChannelHistory(String channelName) {
+    public List<Message> getChannelHistory(String channelName) {
         return messageRepository.getMessages();
     }
 }

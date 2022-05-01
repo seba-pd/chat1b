@@ -1,7 +1,7 @@
 package com.sebapd.chat1b.chat.domain;
 
-public class ChatMessage {
+public class File {
 
     private String author;
-    private String message;
+    private byte[] byteArr;
 }

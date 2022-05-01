@@ -8,6 +8,9 @@ import java.util.Optional;
 public interface ChannelsRepository {
 
     void addChannel(Channel channel);
+
+    void deleteChannel(Channel channel);
+
     List<Channel> getChannelList();
-    Optional<Channel> getChannelById(Long id);
+    Optional<Channel> getChannelByName(String channelName);
 }

@@ -2,16 +2,19 @@ package com.sebapd.chat1b.chat.domain.services;
 
 import com.sebapd.chat1b.chat.domain.Channel;
 import com.sebapd.chat1b.chat.domain.exceptions.ChannelAlreadyExistException;
+import com.sebapd.chat1b.chat.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.chat.ports.ChannelsRepository;
 import com.sebapd.chat1b.chat.ports.ChannelsService;
 import lombok.RequiredArgsConstructor;
 
+import javax.inject.Inject;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class ChatChannelsService implements ChannelsService {
 
     private final ChannelsRepository channelsRepository;
@@ -25,7 +28,8 @@ public class ChatChannelsService implements ChannelsService {
             channelsRepository.addChannel(
                     Channel.builder()
                             .id(UUID.randomUUID())
-                            .name(name)
+                            .channelName(name)
+                            .channelMembers(new LinkedList<>())
                             .build());
         } else {
             throw new ChannelAlreadyExistException();
@@ -34,15 +38,21 @@ public class ChatChannelsService implements ChannelsService {
     }
 
     @Override
-    public List<Channel> channelList() {
+    public void deleteChannel(String channelName) {
+        var channel = channelsRepository.getChannelByName(channelName).orElseThrow(ChannelNotFoundException::new);
+        channelsRepository.deleteChannel(channel);
+    }
+
+    @Override
+    public List<Channel> getChannelList() {
         lock.readLock().lock();
         List<Channel> channels = channelsRepository.getChannelList();
         lock.readLock().unlock();
         return channels;
     }
 
-    private boolean channelAlreadyExist(String channelName){
+    private boolean channelAlreadyExist(String channelName) {
         List<Channel> channels = channelsRepository.getChannelList();
-        return channels.stream().map(Channel::getName).anyMatch(c -> c.equals(channelName));
+        return channels.stream().map(Channel::getChannelName).anyMatch(c -> c.equals(channelName));
     }
 }
