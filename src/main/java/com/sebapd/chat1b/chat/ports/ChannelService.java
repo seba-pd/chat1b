@@ -8,5 +8,5 @@ public interface ChannelService {
 
     void addMemberToChannel(String chatMemberName, String channelName);
     void removeChatMember(String chatMemberName, String channelName);
-    List<Member> getChatMember(String channelName);
+    List<Member> getChatMembers(String channelName);
 }

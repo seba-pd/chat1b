@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Transactional
 @Singleton
@@ -30,8 +31,8 @@ public class JpaMemberRepositoryAdapter implements MemberRepository {
     }
 
     @Override
-    public Member getChatMemberByName(String name) {
-        var chatMemberEntity = jpaMemberRepository.getByName(name);
-        return jpaPersistenceMemberMapper.toDomain(chatMemberEntity);
+    public Optional<Member> getChatMemberByName(String name) {
+        var optionalChatMemberEntity = jpaMemberRepository.getByName(name);
+        return optionalChatMemberEntity.map(jpaPersistenceMemberMapper::toDomain);
     }
 }

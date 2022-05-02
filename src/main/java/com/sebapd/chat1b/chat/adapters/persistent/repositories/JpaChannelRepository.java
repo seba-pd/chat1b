@@ -16,14 +16,12 @@ public class JpaChannelRepository {
     private EntityManager entityManager;
 
     public void addChannelMember(MemberEntity memberEntity, ChannelEntity channelEntity){
-        memberEntity.addChannel(channelEntity);
-        entityManager.merge(memberEntity);
+        channelEntity.getChannelMembers().add(memberEntity);
         entityManager.merge(channelEntity);
     }
 
     public void removeChannelMember(MemberEntity memberEntity, ChannelEntity channelEntity){
-        memberEntity.removeChannel(channelEntity);
-        entityManager.merge(memberEntity);
+        channelEntity.getChannelMembers().remove(memberEntity);
         entityManager.merge(channelEntity);
     }
 

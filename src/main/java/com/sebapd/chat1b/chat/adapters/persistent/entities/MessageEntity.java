@@ -15,13 +15,15 @@ import java.util.UUID;
 @Entity
 @Setter
 @Getter
-@Table(name = "member")
-public class MemberEntity {
+@Table(name = "message")
+public class MessageEntity {
+
     @Id
-    @Column(name = "member_id", nullable = false)
-    private UUID memberId;
-    @Column(nullable = false, unique = true)
-    private String name;
+    @Column(name = "message_id", nullable = false)
+    private UUID messageId;
+    @Column(nullable = false)
+    private String author;
+    private String content;
     @Column(nullable = false)
     private Timestamp createDate;
 

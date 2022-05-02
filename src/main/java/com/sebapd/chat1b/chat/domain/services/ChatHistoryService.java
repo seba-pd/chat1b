@@ -14,6 +14,6 @@ public class ChatHistoryService implements HistoryService {
 
     @Override
     public List<Message> getChannelHistory(String channelName) {
-        return messageRepository.getMessages();
+        return null;
     }
 }

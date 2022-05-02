@@ -1,13 +1,13 @@
 package com.sebapd.chat1b.chat.adapters.persistent.repositories;
 
 import com.sebapd.chat1b.chat.adapters.persistent.entities.ChannelEntity;
-import com.sebapd.chat1b.chat.adapters.persistent.entities.MemberEntity;
 import lombok.Setter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 
 public class JpaChannelsRepository {
@@ -29,8 +29,12 @@ public class JpaChannelsRepository {
         return query.getResultList();
     }
 
-    public ChannelEntity getByName(String name) {
-        return (ChannelEntity) entityManager.createQuery("select a From ChannelEntity a where a.channelName like :name")
-                .setParameter("name", name).getSingleResult();
+    public Optional<ChannelEntity> getByName(String name) {
+        try {
+            return Optional.of((ChannelEntity) entityManager.createQuery("select a From ChannelEntity a where a.channelName like :name")
+                    .setParameter("name", name).getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

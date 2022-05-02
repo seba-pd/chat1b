@@ -11,4 +11,6 @@ public interface JpaPersistenceChannelMapper {
 
     Channel toDomain(ChannelEntity channelEntity);
     ChannelEntity toEntity(Channel channel);
+
+
 }

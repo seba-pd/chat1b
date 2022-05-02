@@ -27,7 +27,7 @@ public class ChatChannelsService implements ChannelsService {
         if (!channelAlreadyExist(name)) {
             channelsRepository.addChannel(
                     Channel.builder()
-                            .id(UUID.randomUUID())
+                            .channelId(UUID.randomUUID())
                             .channelName(name)
                             .channelMembers(new LinkedList<>())
                             .build());

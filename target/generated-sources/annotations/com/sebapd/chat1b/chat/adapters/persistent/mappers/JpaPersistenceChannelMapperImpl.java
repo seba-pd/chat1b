@@ -14,7 +14,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-01T19:11:25+0200",
+    date = "2022-05-02T23:16:44+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -28,7 +28,7 @@ public class JpaPersistenceChannelMapperImpl implements JpaPersistenceChannelMap
 
         ChannelBuilder channel = Channel.builder();
 
-        channel.id( channelEntity.getId() );
+        channel.channelId( channelEntity.getChannelId() );
         channel.channelMembers( memberEntityListToMemberList( channelEntity.getChannelMembers() ) );
         channel.channelName( channelEntity.getChannelName() );
 
@@ -43,24 +43,11 @@ public class JpaPersistenceChannelMapperImpl implements JpaPersistenceChannelMap
 
         ChannelEntity channelEntity = new ChannelEntity();
 
-        channelEntity.setId( channel.getId() );
+        channelEntity.setChannelId( channel.getChannelId() );
         channelEntity.setChannelName( channel.getChannelName() );
         channelEntity.setChannelMembers( memberListToMemberEntityList( channel.getChannelMembers() ) );
 
         return channelEntity;
-    }
-
-    protected List<Channel> channelEntityListToChannelList(List<ChannelEntity> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<Channel> list1 = new ArrayList<Channel>( list.size() );
-        for ( ChannelEntity channelEntity : list ) {
-            list1.add( toDomain( channelEntity ) );
-        }
-
-        return list1;
     }
 
     protected Member memberEntityToMember(MemberEntity memberEntity) {
@@ -73,7 +60,6 @@ public class JpaPersistenceChannelMapperImpl implements JpaPersistenceChannelMap
         member.memberId( memberEntity.getMemberId() );
         member.name( memberEntity.getName() );
         member.createDate( memberEntity.getCreateDate() );
-        member.activeChannels( channelEntityListToChannelList( memberEntity.getActiveChannels() ) );
 
         return member.build();
     }
@@ -91,19 +77,6 @@ public class JpaPersistenceChannelMapperImpl implements JpaPersistenceChannelMap
         return list1;
     }
 
-    protected List<ChannelEntity> channelListToChannelEntityList(List<Channel> list) {
-        if ( list == null ) {
-            return null;
-        }
-
-        List<ChannelEntity> list1 = new ArrayList<ChannelEntity>( list.size() );
-        for ( Channel channel : list ) {
-            list1.add( toEntity( channel ) );
-        }
-
-        return list1;
-    }
-
     protected MemberEntity memberToMemberEntity(Member member) {
         if ( member == null ) {
             return null;
@@ -114,7 +87,6 @@ public class JpaPersistenceChannelMapperImpl implements JpaPersistenceChannelMap
         memberEntity.setMemberId( member.getMemberId() );
         memberEntity.setName( member.getName() );
         memberEntity.setCreateDate( member.getCreateDate() );
-        memberEntity.setActiveChannels( channelListToChannelEntityList( member.getActiveChannels() ) );
 
         return memberEntity;
     }

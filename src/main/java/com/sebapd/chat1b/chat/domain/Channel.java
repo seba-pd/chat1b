@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Getter
 public class Channel {
 
-    private final UUID id;
+    private final UUID channelId;
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final List<Member> channelMembers;
     private final String channelName;

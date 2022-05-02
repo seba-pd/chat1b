@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 public class JpaMemberRepository {
 
@@ -20,8 +21,12 @@ public class JpaMemberRepository {
         entityManager.remove(getByName(chatMemberName));
     }
 
-    public MemberEntity getByName(String name){
-        return (MemberEntity) entityManager.createQuery("select a From MemberEntity a where a.name like :name" )
-                .setParameter("name", name).getSingleResult();
+    public Optional<MemberEntity> getByName(String name){
+        try {
+            return Optional.of((MemberEntity) entityManager.createQuery("select a From MemberEntity a where a.name like :name" )
+                    .setParameter("name", name).getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

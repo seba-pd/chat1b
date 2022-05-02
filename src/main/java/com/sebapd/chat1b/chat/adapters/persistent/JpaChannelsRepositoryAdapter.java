@@ -1,9 +1,6 @@
 package com.sebapd.chat1b.chat.adapters.persistent;
 
-import com.sebapd.chat1b.chat.adapters.persistent.entities.ChannelEntity;
-import com.sebapd.chat1b.chat.adapters.persistent.entities.MemberEntity;
 import com.sebapd.chat1b.chat.adapters.persistent.mappers.JpaPersistenceChannelMapper;
-import com.sebapd.chat1b.chat.adapters.persistent.repositories.JpaChannelRepository;
 import com.sebapd.chat1b.chat.adapters.persistent.repositories.JpaChannelsRepository;
 import com.sebapd.chat1b.chat.domain.Channel;
 import com.sebapd.chat1b.chat.ports.ChannelsRepository;
@@ -14,7 +11,6 @@ import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional
 @Singleton
@@ -43,7 +39,7 @@ public class JpaChannelsRepositoryAdapter implements ChannelsRepository {
 
     @Override
     public Optional<Channel> getChannelByName(String channelName) {
-        var channelEntity = jpaChannelsRepository.getByName(channelName);
-        return Optional.ofNullable(jpaPersistenceChannelMapper.toDomain(channelEntity));
+        var optionalChannelEntity = jpaChannelsRepository.getByName(channelName);
+        return optionalChannelEntity.map(jpaPersistenceChannelMapper::toDomain);
     }
 }
