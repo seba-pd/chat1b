@@ -55,4 +55,9 @@ public class ChatChannelsService implements ChannelsService {
         List<Channel> channels = channelsRepository.getChannelList();
         return channels.stream().map(Channel::getChannelName).anyMatch(c -> c.equals(channelName));
     }
+
+    private Channel getChannel(String channelName){
+        return channelsRepository.getChannelByName(channelName)
+                .orElseThrow(ChannelNotFoundException::new);
+    }
 }

@@ -1,10 +1,12 @@
 package com.sebapd.chat1b.chat.domain.services;
 
-import com.sebapd.chat1b.chat.domain.Channel;
 import com.sebapd.chat1b.chat.domain.Member;
 import com.sebapd.chat1b.chat.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.chat.domain.exceptions.MemberNotFoundException;
-import com.sebapd.chat1b.chat.ports.*;
+import com.sebapd.chat1b.chat.ports.ChannelRepository;
+import com.sebapd.chat1b.chat.ports.ChannelService;
+import com.sebapd.chat1b.chat.ports.ChannelsRepository;
+import com.sebapd.chat1b.chat.ports.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
@@ -22,7 +24,8 @@ public class ChatChannelService implements ChannelService {
     public void addMemberToChannel(String chatMemberName, String channelName) {
         var member = chatMemberRepository.getChatMemberByName(chatMemberName)
                 .orElseThrow(MemberNotFoundException::new);
-        var channel = getChannel(channelName);
+        var channel = channelsRepository.getChannelByName(channelName)
+                .orElseThrow(ChannelNotFoundException::new);
         channelRepository.addMemberToChannel(member, channel);
     }
 
@@ -30,17 +33,15 @@ public class ChatChannelService implements ChannelService {
     public void removeChatMember(String chatMemberName, String channelName) {
         var member = chatMemberRepository.getChatMemberByName(channelName)
                 .orElseThrow(MemberNotFoundException::new);
-        channelRepository.removeChannelMember(member, getChannel(channelName));
+        var channel =  channelsRepository.getChannelByName(channelName)
+                        .orElseThrow(ChannelNotFoundException::new);
+        channelRepository.removeChannelMember(member, channel);
     }
 
     @Override
     public List<Member> getChatMembers(String channelName) {
-        var channel = getChannel(channelName);
-        return channelRepository.getChannelMembers(channel);
-    }
-
-    private Channel getChannel(String channelName){
-        return channelsRepository.getChannelByName(channelName)
+        var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
+        return channelRepository.getChannelMembers(channel);
     }
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -25,11 +26,14 @@ public class ChannelEntity {
             joinColumns = @JoinColumn(name = "channel_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id")
     )
-    private List<MemberEntity> channelMembers = new LinkedList<>();
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MemberEntity> channelMembers = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "channel_message",
             joinColumns = @JoinColumn(name = "channel_id"),
             inverseJoinColumns = @JoinColumn(name = "message_id")
     )
-    private List<MessageEntity> messageList = new LinkedList<>();
+    private List<MessageEntity> messageList = new ArrayList<>();
+    @OneToMany
+    @JoinTable(name = "file_id")
+    private List<FileEntity> fileList = new ArrayList<>();
 }

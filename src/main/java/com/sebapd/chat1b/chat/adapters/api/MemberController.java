@@ -4,10 +4,8 @@ import com.sebapd.chat1b.chat.adapters.api.dtos.MemberDto;
 import com.sebapd.chat1b.chat.ports.MemberService;
 
 import javax.inject.Inject;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 @Path(value = "member")
 public class MemberController {
@@ -17,6 +15,7 @@ public class MemberController {
 
     @POST
     @Path("add")
+    @Consumes(MediaType.APPLICATION_JSON)
     public void addChatMember(MemberDto memberDto){
         memberService.addChatMember(memberDto.getMemberName());
     }

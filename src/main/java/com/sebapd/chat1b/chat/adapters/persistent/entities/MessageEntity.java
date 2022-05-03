@@ -21,10 +21,11 @@ public class MessageEntity {
     @Id
     @Column(name = "message_id", nullable = false)
     private UUID messageId;
-    @Column(nullable = false)
+    @Column(name = "author", nullable = false)
     private String author;
+    @Column(name = "content")
     private String content;
-    @Column(nullable = false)
+    @Column(name = "create_date", nullable = false)
     private Timestamp createDate;
 
 }

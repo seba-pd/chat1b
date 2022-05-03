@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-02T23:16:44+0200",
+    date = "2022-05-03T14:01:02+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
