@@ -1,6 +1,8 @@
 package com.sebapd.chat1b.chat.adapters.persistent;
 
+import com.sebapd.chat1b.chat.adapters.persistent.entities.MemberEntity;
 import com.sebapd.chat1b.chat.adapters.persistent.mappers.JpaPersistenceChannelMapper;
+import com.sebapd.chat1b.chat.adapters.persistent.mappers.JpaPersistenceMemberMapper;
 import com.sebapd.chat1b.chat.adapters.persistent.mappers.JpaPersistenceMessageMapper;
 import com.sebapd.chat1b.chat.adapters.persistent.repositories.JpaMessageRepository;
 import com.sebapd.chat1b.chat.domain.Channel;
@@ -23,6 +25,8 @@ public class JpaMessageRepositoryAdapter implements MessageRepository {
     public void sendMessage(Message message, Channel channel) {
         var messageEntity = jpaPersistenceMessageMapper.toEntity(message);
         var channelEntity = jpaPersistenceChannelMapper.toEntity(channel);
+        var membersList= channelEntity.getChannelMembers().stream().map(MemberEntity::getMemberName).toList();
+        messageEntity.getAccessMembersList().addAll(membersList);
         jpaMessageRepository.sendMessage(messageEntity,channelEntity);
     }
 }

@@ -4,11 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @EqualsAndHashCode
@@ -27,5 +26,8 @@ public class MessageEntity {
     private String content;
     @Column(name = "create_date", nullable = false)
     private Timestamp createDate;
+    @ElementCollection
+
+    private List<String> accessMembersList = new ArrayList<>();
 
 }

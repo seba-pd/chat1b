@@ -34,6 +34,9 @@ public class ChannelEntity {
     )
     private List<MessageEntity> messageList = new ArrayList<>();
     @OneToMany
-    @JoinTable(name = "file_id")
+    @JoinTable(name = "channel_file",
+            joinColumns = @JoinColumn(name = "channel_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id")
+    )
     private List<FileEntity> fileList = new ArrayList<>();
 }
