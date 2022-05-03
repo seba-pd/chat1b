@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T14:01:03+0200",
+    date = "2022-05-03T15:06:11+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -24,7 +24,7 @@ public class JpaPersistenceFileMapperImpl implements JpaPersistenceFileMapper {
         FileBuilder file = File.builder();
 
         file.fileId( fileEntity.getFileId() );
-        file.author( fileEntity.getAuthor() );
+        file.memberName( fileEntity.getMemberName() );
         file.fileName( fileEntity.getFileName() );
         file.contentLocation( fileEntity.getContentLocation() );
         file.createTime( fileEntity.getCreateTime() );
@@ -41,7 +41,7 @@ public class JpaPersistenceFileMapperImpl implements JpaPersistenceFileMapper {
         FileEntity fileEntity = new FileEntity();
 
         fileEntity.setFileId( file.getFileId() );
-        fileEntity.setAuthor( file.getAuthor() );
+        fileEntity.setMemberName( file.getMemberName() );
         fileEntity.setFileName( file.getFileName() );
         fileEntity.setContentLocation( file.getContentLocation() );
         fileEntity.setCreateTime( file.getCreateTime() );

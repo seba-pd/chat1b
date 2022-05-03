@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MessageDto {
 
-    private String author;
+    private String memberName;
     private String content;
     private String toChannel;
 }

@@ -21,7 +21,7 @@ public class ChatMemberService implements MemberService {
                 Member.builder()
                         .memberId(UUID.randomUUID())
                         .createDate(Timestamp.from(Instant.now()))
-                        .name(name)
+                        .memberName(name)
                         .build());
     }
 

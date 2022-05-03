@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T14:01:03+0200",
+    date = "2022-05-03T15:06:11+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -24,7 +24,7 @@ public class JpaPersistenceMessageMapperImpl implements JpaPersistenceMessageMap
         MessageBuilder message = Message.builder();
 
         message.messageId( messageEntity.getMessageId() );
-        message.author( messageEntity.getAuthor() );
+        message.memberName( messageEntity.getMemberName() );
         message.content( messageEntity.getContent() );
         message.createDate( messageEntity.getCreateDate() );
 
@@ -40,7 +40,7 @@ public class JpaPersistenceMessageMapperImpl implements JpaPersistenceMessageMap
         MessageEntity messageEntity = new MessageEntity();
 
         messageEntity.setMessageId( message.getMessageId() );
-        messageEntity.setAuthor( message.getAuthor() );
+        messageEntity.setMemberName( message.getMemberName() );
         messageEntity.setContent( message.getContent() );
         messageEntity.setCreateDate( message.getCreateDate() );
 

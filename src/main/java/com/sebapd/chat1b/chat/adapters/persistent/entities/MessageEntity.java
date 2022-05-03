@@ -21,8 +21,8 @@ public class MessageEntity {
     @Id
     @Column(name = "message_id", nullable = false)
     private UUID messageId;
-    @Column(name = "author", nullable = false)
-    private String author;
+    @Column(name = "member_name", nullable = false)
+    private String memberName;
     @Column(name = "content")
     private String content;
     @Column(name = "create_date", nullable = false)

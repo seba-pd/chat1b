@@ -11,6 +11,6 @@ import java.util.UUID;
 public class Member {
 
     private UUID memberId;
-    private String name;
+    private String memberName;
     private Timestamp createDate;
 }

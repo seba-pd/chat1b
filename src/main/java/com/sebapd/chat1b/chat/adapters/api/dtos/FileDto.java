@@ -9,7 +9,7 @@ import java.util.UUID;
 public class FileDto {
 
     private UUID fileId;
-    private String author;
+    private String memberName;
     private String fileName;
     private String content;
     private String channelName;

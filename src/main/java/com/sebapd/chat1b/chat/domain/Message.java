@@ -13,7 +13,7 @@ public class Message {
 
     @Setter
     private UUID messageId;
-    private String author;
+    private String memberName;
     private String content;
     @Setter
     private Timestamp createDate;

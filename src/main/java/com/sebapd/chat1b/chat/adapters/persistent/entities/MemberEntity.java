@@ -20,8 +20,8 @@ public class MemberEntity {
     @Id
     @Column(name = "member_id", nullable = false)
     private UUID memberId;
-    @Column(nullable = false, unique = true)
-    private String name;
+    @Column(name = "member_name" , nullable = false, unique = true)
+    private String memberName;
     @Column(nullable = false)
     private Timestamp createDate;
 

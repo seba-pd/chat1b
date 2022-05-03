@@ -20,8 +20,8 @@ public class FileEntity {
     @Id
     @Column(name = "file_id", nullable = false)
     private UUID fileId;
-    @Column(name = "author",nullable = false)
-    private String author;
+    @Column(name = "member_Name",nullable = false)
+    private String memberName;
     @Column(name = "fileName",nullable = false)
     private String fileName;
     @Column(name = "content_location",nullable = false)

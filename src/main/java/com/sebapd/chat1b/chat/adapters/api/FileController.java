@@ -2,7 +2,6 @@ package com.sebapd.chat1b.chat.adapters.api;
 
 import com.sebapd.chat1b.chat.adapters.api.dtos.FileDto;
 import com.sebapd.chat1b.chat.adapters.api.mappers.RestFileMapper;
-import com.sebapd.chat1b.chat.domain.File;
 import com.sebapd.chat1b.chat.ports.FileService;
 
 import javax.inject.Inject;
@@ -24,6 +23,6 @@ public class FileController {
     @Consumes(MediaType.APPLICATION_JSON)
     public void sendFile(FileDto fileDto) {
         var file = restFileMapper.toDomain(fileDto);
-        fileService.sendFile(file.getFileName(), file.getAuthor(), file.getContent(), fileDto.getChannelName());
+        fileService.sendFile(file.getFileName(), file.getMemberName(), file.getContent(), fileDto.getChannelName());
     }
 }

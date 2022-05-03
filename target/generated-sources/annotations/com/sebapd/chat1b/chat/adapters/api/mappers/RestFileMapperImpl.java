@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T14:01:03+0200",
+    date = "2022-05-03T15:06:11+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -24,7 +24,7 @@ public class RestFileMapperImpl implements RestFileMapper {
 
         file.content( RestFileMapper.stringToBytes( fileDto.getContent() ) );
         file.fileId( fileDto.getFileId() );
-        file.author( fileDto.getAuthor() );
+        file.memberName( fileDto.getMemberName() );
         file.fileName( fileDto.getFileName() );
         file.createTime( fileDto.getCreateTime() );
 
@@ -41,7 +41,7 @@ public class RestFileMapperImpl implements RestFileMapper {
 
         fileDto.setContent( RestFileMapper.bytesToString( file.getContent() ) );
         fileDto.setFileId( file.getFileId() );
-        fileDto.setAuthor( file.getAuthor() );
+        fileDto.setMemberName( file.getMemberName() );
         fileDto.setFileName( file.getFileName() );
         fileDto.setCreateTime( file.getCreateTime() );
 

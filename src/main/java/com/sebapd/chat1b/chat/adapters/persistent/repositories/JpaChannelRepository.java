@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class JpaChannelRepository {
@@ -26,8 +25,7 @@ public class JpaChannelRepository {
     }
 
     public List<MemberEntity> getChannelMembers(ChannelEntity channelEntity){
-        TypedQuery<MemberEntity> query = entityManager.createQuery("select MemberEntity From ChannelEntity WHERE ChannelEntity.channelName like :" + channelEntity.getChannelName(), MemberEntity.class);
-        return query.getResultList();
+        return channelEntity.getChannelMembers();
     }
 
 

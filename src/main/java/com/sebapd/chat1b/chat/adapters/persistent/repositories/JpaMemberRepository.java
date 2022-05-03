@@ -23,7 +23,7 @@ public class JpaMemberRepository {
 
     public Optional<MemberEntity> getByName(String name){
         try {
-            return Optional.of((MemberEntity) entityManager.createQuery("select a From MemberEntity a where a.name like :name" )
+            return Optional.of((MemberEntity) entityManager.createQuery("select a From MemberEntity a where a.memberName like :name" )
                     .setParameter("name", name).getSingleResult());
         } catch (Exception e) {
             return Optional.empty();

@@ -25,12 +25,11 @@ public class ChatMessageService implements MessageService {
         message.setMessageId(UUID.randomUUID());
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        var members = channelRepository.getChannelMembers(channel);
-        var membersNames = members
+        var membersNames = channel.getChannelMembers()
                 .stream()
-                .map(Member::getName)
+                .map(Member::getMemberName)
                 .toList();
-        if(membersNames.contains(message.getAuthor())){
+        if(membersNames.contains(message.getMemberName())){
             messageRepository.sendMessage(message,channel);
         }else
             throw new MemberNotExistInChannel();

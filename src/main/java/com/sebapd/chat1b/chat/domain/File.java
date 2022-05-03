@@ -12,7 +12,7 @@ import java.util.UUID;
 public class File {
 
     private UUID fileId;
-    private String author;
+    private String memberName;
     private String fileName;
     private String contentLocation;
     @Setter

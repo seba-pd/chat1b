@@ -1,6 +1,7 @@
 package com.sebapd.chat1b.chat.domain.services;
 
 import com.sebapd.chat1b.chat.domain.File;
+import com.sebapd.chat1b.chat.domain.Member;
 import com.sebapd.chat1b.chat.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.chat.domain.exceptions.FileNotFoundException;
 import com.sebapd.chat1b.chat.domain.exceptions.MemberNotExistInChannel;
@@ -23,20 +24,21 @@ public class ChatFileService implements FileService {
 
 
     @Override
-    public void sendFile(String fileName, String authorName, byte[] content, String channelName) {
+    public void sendFile(String fileName, String memberName, byte[] content, String channelName) {
         var file = File.builder()
                 .fileId(UUID.randomUUID())
                 .fileName(fileName)
-                .author(authorName)
+                .memberName(memberName)
                 .content(content)
                 .createTime(Timestamp.from(Instant.now()))
                 .build();
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        var channelMembers = channelRepository.getChannelMembers(channel);
-        var member = memberRepository.getChatMemberByName(authorName)
-                .orElseThrow(MemberNotFoundException::new);
-        if(channelMembers.contains(member)){
+        var membersNames = channel.getChannelMembers()
+                .stream()
+                .map(Member::getMemberName)
+                .toList();
+        if(membersNames.contains(memberName)){
             fileRepository.sendFile(file, channel);
         }else
             throw new MemberNotExistInChannel();

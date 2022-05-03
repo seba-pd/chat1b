@@ -17,12 +17,12 @@ public class ChatChannelService implements ChannelService {
 
     private final ChannelRepository channelRepository;
     private final ChannelsRepository channelsRepository;
-    private final MemberRepository chatMemberRepository;
+    private final MemberRepository memberRepository;
 
 
     @Override
-    public void addMemberToChannel(String chatMemberName, String channelName) {
-        var member = chatMemberRepository.getChatMemberByName(chatMemberName)
+    public void addMemberToChannel(String memberName, String channelName) {
+        var member = memberRepository.getChatMemberByName(memberName)
                 .orElseThrow(MemberNotFoundException::new);
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
@@ -31,7 +31,7 @@ public class ChatChannelService implements ChannelService {
 
     @Override
     public void removeChatMember(String chatMemberName, String channelName) {
-        var member = chatMemberRepository.getChatMemberByName(channelName)
+        var member = memberRepository.getChatMemberByName(channelName)
                 .orElseThrow(MemberNotFoundException::new);
         var channel =  channelsRepository.getChannelByName(channelName)
                         .orElseThrow(ChannelNotFoundException::new);

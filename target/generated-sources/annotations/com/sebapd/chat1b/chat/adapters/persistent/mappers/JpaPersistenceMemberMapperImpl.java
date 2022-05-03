@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T14:01:02+0200",
+    date = "2022-05-03T15:06:11+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -24,7 +24,7 @@ public class JpaPersistenceMemberMapperImpl implements JpaPersistenceMemberMappe
         MemberEntity memberEntity = new MemberEntity();
 
         memberEntity.setMemberId( member.getMemberId() );
-        memberEntity.setName( member.getName() );
+        memberEntity.setMemberName( member.getMemberName() );
         memberEntity.setCreateDate( member.getCreateDate() );
 
         return memberEntity;
@@ -39,7 +39,7 @@ public class JpaPersistenceMemberMapperImpl implements JpaPersistenceMemberMappe
         MemberBuilder member = Member.builder();
 
         member.memberId( memberEntity.getMemberId() );
-        member.name( memberEntity.getName() );
+        member.memberName( memberEntity.getMemberName() );
         member.createDate( memberEntity.getCreateDate() );
 
         return member.build();
