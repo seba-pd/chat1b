@@ -1,5 +1,6 @@
 package com.sebapd.chat1b.chat.domain.services;
 
+import com.sebapd.chat1b.chat.domain.Channel;
 import com.sebapd.chat1b.chat.domain.File;
 import com.sebapd.chat1b.chat.domain.Member;
 import com.sebapd.chat1b.chat.domain.exceptions.ChannelNotFoundException;
@@ -19,9 +20,6 @@ public class ChatFileService implements FileService {
 
     private final FileRepository fileRepository;
     private final ChannelsRepository channelsRepository;
-    private final ChannelRepository channelRepository;
-    private final MemberRepository memberRepository;
-
 
     @Override
     public void sendFile(String fileName, String memberName, byte[] content, String channelName) {
@@ -32,23 +30,31 @@ public class ChatFileService implements FileService {
                 .content(content)
                 .createTime(Timestamp.from(Instant.now()))
                 .build();
+
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        var membersNames = channel.getChannelMembers()
-                .stream()
-                .map(Member::getMemberName)
-                .toList();
-        if(membersNames.contains(memberName)){
+        if (ifMemberExistOnChannel(channel, memberName)) {
             fileRepository.sendFile(file, channel);
-        }else
+        } else
             throw new MemberNotExistInChannel();
     }
 
     @Override
-    public File getFileByName(String fileName) {
-       var file =  fileRepository.getFileByName(fileName)
-               .orElseThrow(FileNotFoundException::new);
-       file.setContent(fileRepository.receiveContent(file.getContentLocation()));
-       return file;
+    public File getFileByName(String fileName, String memberName, String channelName) {
+        var file = fileRepository.getFileByName(fileName)
+                .orElseThrow(FileNotFoundException::new);
+        var channel = channelsRepository.getChannelByName(channelName)
+                .orElseThrow(ChannelNotFoundException::new);
+        if (ifMemberExistOnChannel(channel, memberName))
+            file.setContent(fileRepository.receiveContent(file.getContentLocation()));
+        return file;
+    }
+
+    private boolean ifMemberExistOnChannel(Channel channel, String memberName) {
+        var membersNames = channel.getChannelMembers()
+                .stream()
+                .map(Member::getMemberName)
+                .toList();
+        return membersNames.contains(memberName);
     }
 }
