@@ -26,8 +26,8 @@ public class JpaMemberRepositoryAdapter implements MemberRepository {
     }
 
     @Override
-    public void removeChatMemberByName(String name) {
-        jpaMemberRepository.delete(name);
+    public void removeChatMemberByName(String memberName) {
+        jpaMemberRepository.delete(memberName);
     }
 
     @Override

@@ -20,9 +20,10 @@ public class FileController {
     @Path("send_file")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void sendFile(FileDto fileDto) {
+    public Response sendFile(FileDto fileDto) {
         var file = restFileMapper.toDomain(fileDto);
         fileService.sendFile(file.getFileName(), file.getMemberName(), file.getContent(), fileDto.getChannelName());
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @Path("receive_file")

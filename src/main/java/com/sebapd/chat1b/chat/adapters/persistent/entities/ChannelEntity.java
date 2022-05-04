@@ -27,7 +27,7 @@ public class ChannelEntity {
             inverseJoinColumns = @JoinColumn(name = "member_id")
     )
     private List<MemberEntity> channelMembers = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinTable(name = "channel_message",
             joinColumns = @JoinColumn(name = "channel_id"),
             inverseJoinColumns = @JoinColumn(name = "message_id")

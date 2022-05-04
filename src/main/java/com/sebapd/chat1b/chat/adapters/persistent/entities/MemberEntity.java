@@ -4,11 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @EqualsAndHashCode
@@ -24,5 +22,7 @@ public class MemberEntity {
     private String memberName;
     @Column(nullable = false)
     private Timestamp createDate;
+    @ManyToMany(mappedBy = "channelMembers")
+    private List<ChannelEntity> channelEntityList;
 
 }

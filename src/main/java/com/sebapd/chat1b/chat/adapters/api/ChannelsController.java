@@ -21,8 +21,9 @@ public class ChannelsController {
     @POST
     @Path("add_channel")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addChannel(ChannelDto channelDto){
+    public Response addChannel(ChannelDto channelDto){
         channelsService.addChannel(channelDto.getChannelName());
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @GET

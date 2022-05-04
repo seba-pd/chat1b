@@ -46,8 +46,9 @@ public class ChatChannelService implements ChannelService {
     public List<Message> getHistory(String channelName, String memberName) {
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        return channel.getMessageList().stream().filter(message -> message.getAccessMembersList().contains(memberName)).toList();
+        return channel.getMessageList()
+                .stream()
+                .filter(message -> message.getAccessMembersList().contains(memberName))
+                .toList();
     }
-
-
 }

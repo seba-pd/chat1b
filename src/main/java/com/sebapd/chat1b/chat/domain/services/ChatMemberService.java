@@ -13,11 +13,11 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor_ = @Inject )
 public class ChatMemberService implements MemberService {
 
-    private final MemberRepository chatMemberRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public void addChatMember(String name) {
-        chatMemberRepository.addChatMember(
+        memberRepository.addChatMember(
                 Member.builder()
                         .memberId(UUID.randomUUID())
                         .createDate(Timestamp.from(Instant.now()))
@@ -26,7 +26,7 @@ public class ChatMemberService implements MemberService {
     }
 
     @Override
-    public void removeChatMemberByName(String name) {
-        chatMemberRepository.removeChatMemberByName(name);
+    public void removeChatMemberByName(String memberName) {
+            memberRepository.removeChatMemberByName(memberName);
     }
 }
