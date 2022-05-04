@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -17,5 +18,6 @@ public class Message {
     private String content;
     @Setter
     private Timestamp createDate;
+    private List<String> accessMembersList;
 
 }

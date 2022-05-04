@@ -27,7 +27,6 @@ public class MessageEntity {
     @Column(name = "create_date", nullable = false)
     private Timestamp createDate;
     @ElementCollection
-
     private List<String> accessMembersList = new ArrayList<>();
 
 }

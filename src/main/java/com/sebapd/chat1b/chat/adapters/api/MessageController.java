@@ -24,7 +24,7 @@ public class MessageController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response sendMessage(MessageDto messageDto){
         var message = restMessageMapper.toDomain(messageDto);
-        messageService.send(message,messageDto.getToChannel());
+        messageService.send(message,messageDto.getChannel());
         return Response.status(Response.Status.ACCEPTED).build();
     }
 }

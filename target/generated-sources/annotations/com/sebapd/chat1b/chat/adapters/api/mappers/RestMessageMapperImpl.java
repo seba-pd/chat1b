@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T19:53:11+0200",
+    date = "2022-05-04T11:53:36+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -24,6 +24,7 @@ public class RestMessageMapperImpl implements RestMessageMapper {
 
         message.memberName( messageDto.getMemberName() );
         message.content( messageDto.getContent() );
+        message.createDate( messageDto.getCreateDate() );
 
         return message.build();
     }
@@ -38,6 +39,7 @@ public class RestMessageMapperImpl implements RestMessageMapper {
 
         messageDto.setMemberName( message.getMemberName() );
         messageDto.setContent( message.getContent() );
+        messageDto.setCreateDate( message.getCreateDate() );
 
         return messageDto;
     }

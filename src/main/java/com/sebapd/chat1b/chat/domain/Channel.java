@@ -16,5 +16,6 @@ public class Channel {
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final List<Member> channelMembers;
     private final String channelName;
+    private final List<Message> messageList;
 
 }

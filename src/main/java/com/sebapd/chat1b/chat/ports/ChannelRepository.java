@@ -10,4 +10,5 @@ public interface ChannelRepository {
     void addMemberToChannel(Member member, Channel channel);
     void removeChannelMember(Member member, Channel channel);
     List<Member> getChannelMembers(Channel channel);
+
 }
