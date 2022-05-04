@@ -1,4 +1,0 @@
-package com.sebapd.chat1b.chat.domain.exceptions;
-
-public class MemberNotExistInChannel extends RuntimeException{
-}

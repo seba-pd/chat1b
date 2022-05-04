@@ -1,45 +1,26 @@
 package com.sebapd.chat1b.client;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-
-import javax.jms.*;
+import java.util.Scanner;
 
 public class ChatClient {
 
-    public static void main(String[] args) {
-        listenChannel();
-    }
+    public static void main(String[] args)  {
+        ChannelService channelService = new ChannelService();
 
-    private static void listenChannel() {
-        ConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-        Connection con = null;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your name: ");
+        String memberName = scanner.nextLine();
 
-        try {
-            con = factory.createConnection();
-            Session session = con.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Topic topic = session.createTopic("test2");
-
-            MessageConsumer consumer = session.createConsumer(topic);
-
-            consumer.setMessageListener(msg -> {
-                try {
-                    if (!(msg instanceof TextMessage tm))
-                        throw new RuntimeException("no text message");
-                    System.out.println(tm.getText());
-                } catch (JMSException e) {
-                    System.err.println("Error reading message");
-                }
-            });
-            con.start();
-        } catch (JMSException e1) {
-            e1.printStackTrace();
-        } finally {
-            try {
-                assert con != null;
-                con.close();
-            } catch (JMSException e) {
-                e.printStackTrace();
+        while(true){
+            String input = scanner.nextLine();
+            switch(input){
+                case "/send" -> channelService.sendMessage(scanner, memberName);
+                case "/history" -> channelService.getHistory(scanner,memberName);
             }
+
         }
     }
+
+
+
 }
