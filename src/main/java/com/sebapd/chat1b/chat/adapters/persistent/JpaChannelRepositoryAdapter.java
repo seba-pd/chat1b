@@ -5,17 +5,14 @@ import com.sebapd.chat1b.chat.adapters.persistent.mappers.JpaPersistenceMemberMa
 import com.sebapd.chat1b.chat.adapters.persistent.repositories.JpaChannelRepository;
 import com.sebapd.chat1b.chat.domain.Channel;
 import com.sebapd.chat1b.chat.domain.Member;
-import com.sebapd.chat1b.chat.domain.Message;
 import com.sebapd.chat1b.chat.ports.ChannelRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional
-@Singleton
 @RequiredArgsConstructor(onConstructor_ =@Inject )
 public class JpaChannelRepositoryAdapter implements ChannelRepository {
 

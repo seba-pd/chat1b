@@ -17,21 +17,28 @@ public class ChatMessageService implements MessageService {
 
     private final MessageRepository messageRepository;
     private final ChannelsRepository channelsRepository;
-    private final ChannelRepository channelRepository;
+    private final JMSMessageService jmsMessageService;
 
     @Override
     public void send(Message message, String channelName) {
+
         message.setCreateDate(Timestamp.from(Instant.now()));
         message.setMessageId(UUID.randomUUID());
+
+        toDatabase(message, channelName);
+        jmsMessageService.toBroker(message,channelName);
+    }
+
+    private void toDatabase(Message message, String channelName) {
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
         var membersNames = channel.getChannelMembers()
                 .stream()
                 .map(Member::getMemberName)
                 .toList();
-        if(membersNames.contains(message.getMemberName())){
-            messageRepository.sendMessage(message,channel);
-        }else
+        if (membersNames.contains(message.getMemberName())) {
+            messageRepository.sendMessage(message, channel);
+        } else
             throw new MemberNotExistInChannel();
     }
 }

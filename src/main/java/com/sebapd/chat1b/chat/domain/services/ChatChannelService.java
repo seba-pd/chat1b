@@ -4,10 +4,7 @@ import com.sebapd.chat1b.chat.domain.Member;
 import com.sebapd.chat1b.chat.domain.Message;
 import com.sebapd.chat1b.chat.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.chat.domain.exceptions.MemberNotFoundException;
-import com.sebapd.chat1b.chat.ports.ChannelRepository;
-import com.sebapd.chat1b.chat.ports.ChannelService;
-import com.sebapd.chat1b.chat.ports.ChannelsRepository;
-import com.sebapd.chat1b.chat.ports.MemberRepository;
+import com.sebapd.chat1b.chat.ports.*;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;

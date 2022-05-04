@@ -5,6 +5,7 @@ import com.sebapd.chat1b.chat.domain.exceptions.ChannelAlreadyExistException;
 import com.sebapd.chat1b.chat.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.chat.ports.ChannelsRepository;
 import com.sebapd.chat1b.chat.ports.ChannelsService;
+import com.sebapd.chat1b.chat.ports.JMSMessageService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;

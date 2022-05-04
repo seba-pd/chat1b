@@ -7,13 +7,11 @@ import com.sebapd.chat1b.chat.ports.ChannelsRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
-@Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class JpaChannelsRepositoryAdapter implements ChannelsRepository {
 
