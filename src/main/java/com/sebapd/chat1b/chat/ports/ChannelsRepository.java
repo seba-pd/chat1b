@@ -9,7 +9,7 @@ public interface ChannelsRepository {
 
     void addChannel(Channel channel);
 
-    void deleteChannel(Channel channel);
+    void deleteChannel(String channel);
 
     List<Channel> getChannelList();
     Optional<Channel> getChannelByName(String channelName);

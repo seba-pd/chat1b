@@ -21,7 +21,7 @@ public class ChannelEntity {
     private UUID channelId;
     @Column(name = "channel_name")
     private String channelName;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "channel_member",
             joinColumns = @JoinColumn(name = "channel_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id")

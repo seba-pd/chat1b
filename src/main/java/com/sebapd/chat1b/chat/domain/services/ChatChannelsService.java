@@ -39,8 +39,9 @@ public class ChatChannelsService implements ChannelsService {
 
     @Override
     public void deleteChannel(String channelName) {
-        var channel = channelsRepository.getChannelByName(channelName).orElseThrow(ChannelNotFoundException::new);
-        channelsRepository.deleteChannel(channel);
+        var channel = channelsRepository.getChannelByName(channelName)
+                .orElseThrow(ChannelNotFoundException::new);
+        channelsRepository.deleteChannel(channelName);
     }
 
     @Override
@@ -54,10 +55,5 @@ public class ChatChannelsService implements ChannelsService {
     private boolean channelAlreadyExist(String channelName) {
         List<Channel> channels = channelsRepository.getChannelList();
         return channels.stream().map(Channel::getChannelName).anyMatch(c -> c.equals(channelName));
-    }
-
-    private Channel getChannel(String channelName){
-        return channelsRepository.getChannelByName(channelName)
-                .orElseThrow(ChannelNotFoundException::new);
     }
 }

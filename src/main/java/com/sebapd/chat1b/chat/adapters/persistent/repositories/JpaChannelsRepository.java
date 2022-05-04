@@ -20,8 +20,9 @@ public class JpaChannelsRepository {
         entityManager.persist(channelEntity);
     }
 
-    public void deleteChannel(ChannelEntity channelEntity) {
-        entityManager.remove(channelEntity);
+    public void deleteChannel(String channelName) {
+        var channel = getByName(channelName).get();
+        entityManager.remove(channel);
     }
 
     public List<ChannelEntity> getChannels() {

@@ -26,9 +26,8 @@ public class JpaChannelsRepositoryAdapter implements ChannelsRepository {
         jpaChannelsRepository.addChannel(channelEntity);
     }
     @Override
-    public void deleteChannel(Channel channel){
-        var channelEntity = jpaPersistenceChannelMapper.toEntity(channel);
-        jpaChannelsRepository.deleteChannel(channelEntity);
+    public void deleteChannel(String channelName){
+        jpaChannelsRepository.deleteChannel(channelName);
     }
 
     @Override

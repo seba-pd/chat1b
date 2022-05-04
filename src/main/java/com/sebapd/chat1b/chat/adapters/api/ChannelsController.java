@@ -34,4 +34,11 @@ public class ChannelsController {
         List<String> channelNames = channelDtoList.stream().map(ChannelDto::getChannelName).toList();
         return Response.status(Response.Status.ACCEPTED).entity(channelNames ).build();
     }
+
+    @DELETE
+    @Path("delete/{channelName}")
+    public Response addChannel(@PathParam("channelName") String channelName){
+        channelsService.deleteChannel(channelName);
+        return Response.status(Response.Status.OK).build();
+    }
 }
