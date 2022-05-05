@@ -18,6 +18,7 @@ public class Message implements Serializable {
     private String memberName;
     private String content;
     @Setter
+    private String channelName;
     private Timestamp createTime;
     private List<String> accessMembersList;
 

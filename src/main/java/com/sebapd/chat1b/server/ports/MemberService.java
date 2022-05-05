@@ -4,4 +4,5 @@ public interface MemberService {
 
     void addChatMember(String name);
     void removeChatMemberByName(String name);
+    void checkIfMemberExist(String memberName);
 }

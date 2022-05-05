@@ -18,12 +18,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class ChatChannelsService implements ChannelsService {
 
     private final ChannelsRepository channelsRepository;
-    // to do interception ?
-    private final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     @Override
     public void addChannel(String name) {
-        lock.writeLock().lock();
         if (!channelAlreadyExist(name)) {
             channelsRepository.addChannel(
                     Channel.builder()
@@ -34,22 +31,16 @@ public class ChatChannelsService implements ChannelsService {
         } else {
             throw new ChannelAlreadyExistException();
         }
-        lock.writeLock().unlock();
     }
 
     @Override
     public void deleteChannel(String channelName) {
-        var channel = channelsRepository.getChannelByName(channelName)
-                .orElseThrow(ChannelNotFoundException::new);
         channelsRepository.deleteChannel(channelName);
     }
 
     @Override
     public List<Channel> getChannelList() {
-        lock.readLock().lock();
-        List<Channel> channels = channelsRepository.getChannelList();
-        lock.readLock().unlock();
-        return channels;
+        return channelsRepository.getChannelList();
     }
 
     private boolean channelAlreadyExist(String channelName) {

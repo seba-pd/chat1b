@@ -11,9 +11,6 @@ import com.sebapd.chat1b.server.ports.MessageService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.UUID;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class ChatMessageService implements MessageService {
@@ -24,9 +21,6 @@ public class ChatMessageService implements MessageService {
 
     @Override
     public void send(Message message, String channelName) {
-
-        message.setCreateTime(Timestamp.from(Instant.now()));
-        message.setMessageId(UUID.randomUUID());
 
         toDatabase(message, channelName);
         jmsMessageService.toBroker(message,channelName);

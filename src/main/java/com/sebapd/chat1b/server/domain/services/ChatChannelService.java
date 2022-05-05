@@ -1,9 +1,11 @@
 package com.sebapd.chat1b.server.domain.services;
 
+import com.sebapd.chat1b.server.domain.Channel;
+import com.sebapd.chat1b.server.domain.Member;
 import com.sebapd.chat1b.server.domain.Message;
 import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
+import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannel;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
-import com.sebapd.chat1b.server.ports.*;
 import com.sebapd.chat1b.server.ports.ChannelRepository;
 import com.sebapd.chat1b.server.ports.ChannelService;
 import com.sebapd.chat1b.server.ports.ChannelsRepository;
@@ -34,11 +36,7 @@ public class ChatChannelService implements ChannelService {
     public void removeChannelMember(String memberName, String channelName) {
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        var member = channel.getChannelMembers()
-                .stream()
-                .filter(m -> m.getMemberName().equals(memberName))
-                .findAny()
-                .orElseThrow(MemberNotFoundException::new);
+        var member = checkIfMemberExistInChannel(channel, memberName);
         channelRepository.removeChannelMember(member, channel);
     }
 
@@ -46,9 +44,22 @@ public class ChatChannelService implements ChannelService {
     public List<Message> getHistory(String channelName, String memberName) {
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        return channel.getMessageList()
+        checkIfMemberExistInChannel(channel, memberName);
+        var messageList = channel.getMessageList()
                 .stream()
                 .filter(message -> message.getAccessMembersList().contains(memberName))
                 .toList();
+        messageList.forEach(message -> message.setChannelName(channelName));
+        return messageList;
+    }
+
+    private Member checkIfMemberExistInChannel(Channel channel, String memberName) {
+        memberRepository.getChatMemberByName(memberName)
+                .orElseThrow(MemberNotFoundException::new);
+        return channel.getChannelMembers()
+                .stream()
+                .filter(m -> m.getMemberName().equals(memberName))
+                .findAny()
+                .orElseThrow(MemberNotExistInChannel::new);
     }
 }

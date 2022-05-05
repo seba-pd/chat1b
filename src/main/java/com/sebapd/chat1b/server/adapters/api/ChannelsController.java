@@ -2,6 +2,8 @@ package com.sebapd.chat1b.server.adapters.api;
 
 import com.sebapd.chat1b.server.adapters.api.dtos.ChannelDto;
 import com.sebapd.chat1b.server.adapters.api.mappers.RestChannelMapper;
+import com.sebapd.chat1b.server.domain.exceptions.ChannelAlreadyExistException;
+import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.server.ports.ChannelsService;
 
 import javax.inject.Inject;
@@ -22,7 +24,11 @@ public class ChannelsController {
     @Path("add_channel")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addChannel(ChannelDto channelDto){
-        channelsService.addChannel(channelDto.getChannelName());
+        try {
+            channelsService.addChannel(channelDto.getChannelName());
+        } catch (ChannelAlreadyExistException e) {
+            return Response.status(Response.Status.CREATED).entity(e.getMessage()).build();
+        }
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -37,8 +43,8 @@ public class ChannelsController {
 
     @DELETE
     @Path("delete/{channelName}")
-    public Response addChannel(@PathParam("channelName") String channelName){
-        channelsService.deleteChannel(channelName);
+    public Response deleteChannel(@PathParam("channelName") String channelName){
+            channelsService.deleteChannel(channelName);
         return Response.status(Response.Status.OK).build();
     }
 }

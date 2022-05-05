@@ -1,6 +1,8 @@
 package com.sebapd.chat1b.server.adapters.api;
 
 import com.sebapd.chat1b.server.adapters.api.dtos.MemberDto;
+import com.sebapd.chat1b.server.domain.exceptions.MemberAlreadyExistException;
+import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
 import com.sebapd.chat1b.server.ports.MemberService;
 
 import javax.inject.Inject;
@@ -18,7 +20,11 @@ public class MemberController {
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addChatMember(MemberDto memberDto){
-        memberService.addChatMember(memberDto.getMemberName());
+        try {
+            memberService.addChatMember(memberDto.getMemberName());
+        } catch (MemberAlreadyExistException e) {
+            return Response.status(Response.Status.OK).entity(e.getMessage()).build();
+        }
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -28,5 +34,14 @@ public class MemberController {
         memberService.removeChatMemberByName(memberName);
         return Response.status(Response.Status.OK).build();
     }
-
+    @GET
+    @Path("{name}")
+    public Response checkIfMemberExist(@PathParam("name") String memberName){
+        try {
+            memberService.checkIfMemberExist(memberName);
+        } catch (MemberNotFoundException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+        return Response.status(Response.Status.OK).build();
+    }
 }
