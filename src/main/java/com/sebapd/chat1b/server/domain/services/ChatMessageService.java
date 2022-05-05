@@ -23,7 +23,8 @@ public class ChatMessageService implements MessageService {
     public void send(Message message, String channelName) {
 
         toDatabase(message, channelName);
-        jmsMessageService.toBroker(message,channelName);
+        message.setChannelName(channelName);
+        jmsMessageService.toBroker(message);
     }
 
     private void toDatabase(Message message, String channelName) {

@@ -7,14 +7,13 @@ import com.sebapd.chat1b.server.domain.Message;
 import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.server.domain.exceptions.FileNotFoundException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannel;
-import com.sebapd.chat1b.server.ports.*;
 import com.sebapd.chat1b.server.ports.ChannelsRepository;
 import com.sebapd.chat1b.server.ports.FileRepository;
 import com.sebapd.chat1b.server.ports.FileService;
+import com.sebapd.chat1b.server.ports.JMSMessageService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
@@ -33,8 +32,9 @@ public class ChatFileService implements FileService {
                 .memberName(memberName)
                 .createTime(Timestamp.from(Instant.now()))
                 .content("send a file : " + fileName)
+                .channelName(channelName)
                 .build();
-        jmsMessageService.toBroker(message,channelName);
+        jmsMessageService.toBroker(message);
 
     }
 

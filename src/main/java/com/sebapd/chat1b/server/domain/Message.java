@@ -24,8 +24,7 @@ public class Message implements Serializable {
 
     public String messageToString() {
         return
-                "memberName='" + memberName + '\'' +
-                ", content='" + content + '\'' +
-                ", createDate=" + createTime;
+                "{\"memberName\" : \"" + memberName + "\",\"createTime\" : \"" + createTime.toString() + "\",\"channelName\" : \""
+                        + channelName + "\"," + "\"content\" : \"" + content + "\"}";
     }
 }
