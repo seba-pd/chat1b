@@ -6,7 +6,7 @@ import com.sebapd.chat1b.server.domain.Member;
 import com.sebapd.chat1b.server.domain.Message;
 import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.server.domain.exceptions.FileNotFoundException;
-import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannel;
+import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannelException;
 import com.sebapd.chat1b.server.ports.ChannelsRepository;
 import com.sebapd.chat1b.server.ports.FileRepository;
 import com.sebapd.chat1b.server.ports.FileService;
@@ -63,7 +63,7 @@ public class ChatFileService implements FileService {
         if (ifMemberExistOnChannel(channel, memberName)) {
             fileRepository.sendFile(file, channel);
         } else
-            throw new MemberNotExistInChannel();
+            throw new MemberNotExistInChannelException();
     }
 
     private boolean ifMemberExistOnChannel(Channel channel, String memberName) {

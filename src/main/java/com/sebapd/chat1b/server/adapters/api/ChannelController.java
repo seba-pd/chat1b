@@ -4,7 +4,8 @@ import com.sebapd.chat1b.server.adapters.api.dtos.MemberChannelDto;
 import com.sebapd.chat1b.server.adapters.api.mappers.RestMessageMapper;
 import com.sebapd.chat1b.server.domain.Message;
 import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
-import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannel;
+import com.sebapd.chat1b.server.domain.exceptions.MemberAlreadyExistInChannelException;
+import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannelException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
 import com.sebapd.chat1b.server.ports.ChannelService;
 
@@ -29,7 +30,7 @@ public class ChannelController {
         try {
             channelService.addMemberToChannel(memberChannelDto.getMemberName(),
                     memberChannelDto.getChannelName());
-        } catch (Exception e) {
+        } catch (MemberAlreadyExistInChannelException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
         return Response.status(Response.Status.CREATED).build();
@@ -43,7 +44,7 @@ public class ChannelController {
         List<Message> messageList;
         try {
             messageList = channelService.getHistory(channelName,memberName);
-        } catch (MemberNotExistInChannel  | ChannelNotFoundException | MemberNotFoundException e) {
+        } catch (MemberNotExistInChannelException | ChannelNotFoundException | MemberNotFoundException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
         var messageDtoList = messageList.stream()

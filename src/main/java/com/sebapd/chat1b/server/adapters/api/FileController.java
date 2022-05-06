@@ -5,7 +5,7 @@ import com.sebapd.chat1b.server.adapters.api.mappers.RestFileMapper;
 import com.sebapd.chat1b.server.domain.File;
 import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.server.domain.exceptions.FileNotFoundException;
-import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannel;
+import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannelException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
 import com.sebapd.chat1b.server.ports.FileService;
 
@@ -29,7 +29,7 @@ public class FileController {
         var file = restFileMapper.toDomain(fileDto);
         try {
             fileService.sendFile(file.getFileName(), file.getMemberName(), file.getContent(), fileDto.getChannelName());
-        } catch (MemberNotFoundException | MemberNotExistInChannel | ChannelNotFoundException e) {
+        } catch (MemberNotFoundException | MemberNotExistInChannelException | ChannelNotFoundException e) {
             return Response.status(Response.Status.OK).entity(e.getMessage()).build();
         }
         return Response.status(Response.Status.CREATED).build();
@@ -44,7 +44,7 @@ public class FileController {
         File file ;
         try {
             file = fileService.getFileByName(fileName, memberName, channelName);
-        } catch (FileNotFoundException | MemberNotFoundException | ChannelNotFoundException| MemberNotExistInChannel e) {
+        } catch (FileNotFoundException | MemberNotFoundException | ChannelNotFoundException| MemberNotExistInChannelException e) {
             return Response.status(Response.Status.OK).entity(e.getMessage()).build();
         }
         var responseFile = restFileMapper.toDto(file);

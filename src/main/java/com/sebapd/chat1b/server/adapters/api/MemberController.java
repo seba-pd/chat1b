@@ -9,8 +9,9 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
-@Path(value = "member")
+@Path( "member")
 public class MemberController {
 
     @Inject
@@ -26,6 +27,19 @@ public class MemberController {
             return Response.status(Response.Status.OK).entity(e.getMessage()).build();
         }
         return Response.status(Response.Status.CREATED).build();
+    }
+
+    @GET
+    @Path("channels/{name}")
+    public Response getMemberChannels(@PathParam("name") String memberName){
+        String channels ;
+        try {
+           var channelsListNames = memberService.getMemberChannels(memberName);
+           channels = String.join(",", channelsListNames);
+        } catch (MemberNotFoundException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+        return Response.status(Response.Status.OK).entity(channels).build();
     }
 
     @DELETE

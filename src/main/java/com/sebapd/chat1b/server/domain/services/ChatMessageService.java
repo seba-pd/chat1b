@@ -3,7 +3,7 @@ package com.sebapd.chat1b.server.domain.services;
 import com.sebapd.chat1b.server.domain.Member;
 import com.sebapd.chat1b.server.domain.Message;
 import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
-import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannel;
+import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannelException;
 import com.sebapd.chat1b.server.ports.ChannelsRepository;
 import com.sebapd.chat1b.server.ports.JMSMessageService;
 import com.sebapd.chat1b.server.ports.MessageRepository;
@@ -37,6 +37,6 @@ public class ChatMessageService implements MessageService {
         if (membersNames.contains(message.getMemberName())) {
             messageRepository.sendMessage(message, channel);
         } else
-            throw new MemberNotExistInChannel();
+            throw new MemberNotExistInChannelException();
     }
 }
