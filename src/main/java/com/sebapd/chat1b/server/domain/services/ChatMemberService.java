@@ -10,10 +10,7 @@ import com.sebapd.chat1b.server.ports.MemberService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject )
 public class ChatMemberService implements MemberService {
@@ -22,14 +19,10 @@ public class ChatMemberService implements MemberService {
     private final ChannelsRepository channelsRepository;
 
     @Override
-    public void addChatMember(String memberName) {
-        if(memberRepository.getChatMemberByName(memberName).isPresent()) throw new MemberAlreadyExistException();
-        memberRepository.addChatMember(
-                Member.builder()
-                        .memberId(UUID.randomUUID())
-                        .createDate(Timestamp.from(Instant.now()))
-                        .memberName(memberName)
-                        .build());
+    public void addChatMember(Member member) {
+        if(memberRepository.getChatMemberByName(member.getMemberName())
+                .isPresent()) throw new MemberAlreadyExistException();
+        memberRepository.addChatMember(member);
     }
 
     @Override

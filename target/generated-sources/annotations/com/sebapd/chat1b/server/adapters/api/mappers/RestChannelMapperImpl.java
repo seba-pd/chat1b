@@ -13,7 +13,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-06T18:33:15+0200",
+    date = "2022-05-06T22:52:43+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -56,6 +56,7 @@ public class RestChannelMapperImpl implements RestChannelMapper {
 
         MemberDto memberDto = new MemberDto();
 
+        memberDto.setMemberId( member.getMemberId() );
         memberDto.setMemberName( member.getMemberName() );
 
         return memberDto;
@@ -81,6 +82,7 @@ public class RestChannelMapperImpl implements RestChannelMapper {
 
         MemberBuilder member = Member.builder();
 
+        member.memberId( memberDto.getMemberId() );
         member.memberName( memberDto.getMemberName() );
 
         return member.build();

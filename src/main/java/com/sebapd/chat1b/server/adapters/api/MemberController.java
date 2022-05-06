@@ -1,6 +1,7 @@
 package com.sebapd.chat1b.server.adapters.api;
 
 import com.sebapd.chat1b.server.adapters.api.dtos.MemberDto;
+import com.sebapd.chat1b.server.adapters.api.mappers.RestMemberMapper;
 import com.sebapd.chat1b.server.domain.exceptions.MemberAlreadyExistException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
 import com.sebapd.chat1b.server.ports.MemberService;
@@ -15,13 +16,15 @@ public class MemberController {
 
     @Inject
     private MemberService memberService;
+    @Inject
+    private RestMemberMapper restMemberMapper;
 
     @POST
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addChatMember(MemberDto memberDto){
         try {
-            memberService.addChatMember(memberDto.getMemberName());
+            memberService.addChatMember(restMemberMapper.toDomain(memberDto));
         } catch (MemberAlreadyExistException e) {
             return Response.status(Response.Status.OK).entity(e.getMessage()).build();
         }
