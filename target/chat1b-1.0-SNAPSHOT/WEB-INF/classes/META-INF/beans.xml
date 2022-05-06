@@ -4,4 +4,7 @@
        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd"
        bean-discovery-mode="all">
+    <decorators>
+        <class>com.sebapd.chat1b.server.domain.decorators.JmsChatMessageServiceDecorator</class>
+    </decorators>
 </beans>

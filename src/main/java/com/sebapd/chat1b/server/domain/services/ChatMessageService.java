@@ -8,26 +8,21 @@ import com.sebapd.chat1b.server.ports.ChannelsRepository;
 import com.sebapd.chat1b.server.ports.JMSMessageService;
 import com.sebapd.chat1b.server.ports.MessageRepository;
 import com.sebapd.chat1b.server.ports.MessageService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.inject.Inject;
 
-@RequiredArgsConstructor(onConstructor_ = @Inject)
+@AllArgsConstructor(onConstructor_ = @Inject)
+@NoArgsConstructor
 public class ChatMessageService implements MessageService {
 
-    private final MessageRepository messageRepository;
-    private final ChannelsRepository channelsRepository;
-    private final JMSMessageService jmsMessageService;
+    private MessageRepository messageRepository;
+    private ChannelsRepository channelsRepository;
 
     @Override
     public void send(Message message, String channelName) {
 
-        toDatabase(message, channelName);
-        message.setChannelName(channelName);
-        jmsMessageService.toBroker(message);
-    }
-
-    private void toDatabase(Message message, String channelName) {
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
         var membersNames = channel.getChannelMembers()

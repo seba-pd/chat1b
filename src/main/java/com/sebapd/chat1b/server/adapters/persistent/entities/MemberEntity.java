@@ -21,7 +21,7 @@ public class MemberEntity {
     @Column(name = "member_name" , nullable = false, unique = true)
     private String memberName;
     @Column(nullable = false)
-    private Timestamp createDate;
+    private Timestamp createTime;
     @ManyToMany(mappedBy = "channelMembers")
     private List<ChannelEntity> channelEntityList;
 

@@ -10,5 +10,5 @@ public class MemberDto {
 
     private UUID memberId;
     private String memberName;
-    private Timestamp createDate;
+    private Timestamp createTime;
 }
