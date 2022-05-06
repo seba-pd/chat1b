@@ -26,7 +26,7 @@ public class ChannelController {
     @Path("add_member_to_channel")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addMemberToChannel(MemberChannelDto memberChannelDto){
+    public Response addMemberToChannel(MemberChannelDto memberChannelDto) {
         try {
             channelService.addMemberToChannel(memberChannelDto.getMemberName(),
                     memberChannelDto.getChannelName());
@@ -36,14 +36,14 @@ public class ChannelController {
         return Response.status(Response.Status.CREATED).build();
     }
 
-    @Path("history/{channelName}/{memberName}")
+    @Path("history/{channelName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHistory(@PathParam("channelName") String channelName,
-                               @PathParam("memberName") String memberName){
+                               @QueryParam("memberName") String memberName) {
         List<Message> messageList;
         try {
-            messageList = channelService.getHistory(channelName,memberName);
+            messageList = channelService.getHistory(channelName, memberName);
         } catch (MemberNotExistInChannelException | ChannelNotFoundException | MemberNotFoundException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -55,10 +55,11 @@ public class ChannelController {
 
     @Path("remove_member_from_channel")
     @DELETE
-    public Response removeMemberFromChannel(MemberChannelDto memberChannelDto){
+    public Response removeMemberFromChannel(@QueryParam("memberName") String memberName,
+                                            @QueryParam("channelName") String channelName) {
         try {
-            channelService.removeChannelMember(memberChannelDto.getMemberName(),memberChannelDto.getChannelName());
-        } catch (ChannelNotFoundException e) {
+            channelService.removeChannelMember(memberName, channelName);
+        } catch (ChannelNotFoundException | MemberNotFoundException | MemberNotExistInChannelException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
         return Response.status(Response.Status.OK).build();

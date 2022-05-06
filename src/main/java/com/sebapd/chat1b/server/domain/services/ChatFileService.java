@@ -26,7 +26,7 @@ public class ChatFileService implements FileService {
     private final JMSMessageService jmsMessageService;
 
     @Override
-    public void sendFile(String fileName, String memberName, byte[] content, String channelName) {
+    public void saveFile(String fileName, String memberName, byte[] content, String channelName) {
         toDatabase(fileName, memberName, content, channelName);
         var message = Message.builder()
                 .memberName(memberName)
@@ -35,7 +35,6 @@ public class ChatFileService implements FileService {
                 .channelName(channelName)
                 .build();
         jmsMessageService.toBroker(message);
-
     }
 
     @Override
@@ -50,6 +49,8 @@ public class ChatFileService implements FileService {
     }
 
     private void toDatabase(String fileName, String memberName, byte[] content, String channelName) {
+        var channel = channelsRepository.getChannelByName(channelName)
+                .orElseThrow(ChannelNotFoundException::new);
         var file = File.builder()
                 .fileId(UUID.randomUUID())
                 .fileName(fileName)
@@ -57,9 +58,6 @@ public class ChatFileService implements FileService {
                 .content(content)
                 .createTime(Timestamp.from(Instant.now()))
                 .build();
-
-        var channel = channelsRepository.getChannelByName(channelName)
-                .orElseThrow(ChannelNotFoundException::new);
         if (ifMemberExistOnChannel(channel, memberName)) {
             fileRepository.sendFile(file, channel);
         } else

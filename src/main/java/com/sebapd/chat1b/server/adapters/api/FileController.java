@@ -28,7 +28,7 @@ public class FileController {
     public Response sendFile(FileDto fileDto) {
         var file = restFileMapper.toDomain(fileDto);
         try {
-            fileService.sendFile(file.getFileName(), file.getMemberName(), file.getContent(), fileDto.getChannelName());
+            fileService.saveFile(file.getFileName(), file.getMemberName(), file.getContent(), fileDto.getChannelName());
         } catch (MemberNotFoundException | MemberNotExistInChannelException | ChannelNotFoundException e) {
             return Response.status(Response.Status.OK).entity(e.getMessage()).build();
         }

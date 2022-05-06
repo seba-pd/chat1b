@@ -7,10 +7,7 @@ import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberAlreadyExistInChannelException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannelException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
-import com.sebapd.chat1b.server.ports.ChannelRepository;
-import com.sebapd.chat1b.server.ports.ChannelService;
-import com.sebapd.chat1b.server.ports.ChannelsRepository;
-import com.sebapd.chat1b.server.ports.MemberRepository;
+import com.sebapd.chat1b.server.ports.*;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
@@ -22,6 +19,7 @@ public class ChatChannelService implements ChannelService {
     private final ChannelRepository channelRepository;
     private final ChannelsRepository channelsRepository;
     private final MemberRepository memberRepository;
+    private final JMSMessageService jmsMessageService; // decorator/interceptor?
 
 
     @Override
@@ -31,7 +29,12 @@ public class ChatChannelService implements ChannelService {
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
         if(checkIfMemberExistInChannel(channel, member)) throw new MemberAlreadyExistInChannelException();
+
         channelRepository.addMemberToChannel(member, channel);
+
+        jmsMessageService.toBroker(Message.builder()
+                .content(memberName + " join to channel")
+                .build());
     }
 
     @Override
@@ -41,7 +44,12 @@ public class ChatChannelService implements ChannelService {
         var member = memberRepository.getChatMemberByName(memberName)
                 .orElseThrow(MemberNotFoundException::new);
         if(!checkIfMemberExistInChannel(channel, member)) throw new MemberNotExistInChannelException();
+
         channelRepository.removeChannelMember(member, channel);
+
+        jmsMessageService.toBroker(Message.builder()
+                .content(memberName + " left from channel")
+                .build());
     }
 
     @Override
@@ -64,5 +72,4 @@ public class ChatChannelService implements ChannelService {
                 .stream()
                 .anyMatch(m -> m.getMemberName().equals(member.getMemberName()));
     }
-
 }
