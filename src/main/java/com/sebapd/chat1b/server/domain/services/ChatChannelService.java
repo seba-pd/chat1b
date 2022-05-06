@@ -11,6 +11,8 @@ import com.sebapd.chat1b.server.ports.*;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
@@ -28,12 +30,15 @@ public class ChatChannelService implements ChannelService {
                 .orElseThrow(MemberNotFoundException::new);
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        if(checkIfMemberExistInChannel(channel, member)) throw new MemberAlreadyExistInChannelException();
+        if (checkIfMemberExistInChannel(channel, member)) throw new MemberAlreadyExistInChannelException();
 
         channelRepository.addMemberToChannel(member, channel);
 
         jmsMessageService.toBroker(Message.builder()
-                .content(memberName + " join to channel")
+                .content(" join to channel")
+                .channelName(channelName)
+                .memberName(memberName)
+                .createTime(Timestamp.from(Instant.now()))
                 .build());
     }
 
@@ -43,12 +48,15 @@ public class ChatChannelService implements ChannelService {
                 .orElseThrow(ChannelNotFoundException::new);
         var member = memberRepository.getChatMemberByName(memberName)
                 .orElseThrow(MemberNotFoundException::new);
-        if(!checkIfMemberExistInChannel(channel, member)) throw new MemberNotExistInChannelException();
+        if (!checkIfMemberExistInChannel(channel, member)) throw new MemberNotExistInChannelException();
 
         channelRepository.removeChannelMember(member, channel);
 
         jmsMessageService.toBroker(Message.builder()
                 .content(memberName + " left from channel")
+                .channelName(channelName)
+                .memberName(memberName)
+                .createTime(Timestamp.from(Instant.now()))
                 .build());
     }
 
@@ -58,7 +66,7 @@ public class ChatChannelService implements ChannelService {
                 .orElseThrow(ChannelNotFoundException::new);
         var member = memberRepository.getChatMemberByName(memberName)
                 .orElseThrow(MemberNotFoundException::new);
-        if(!checkIfMemberExistInChannel(channel, member)) throw new MemberNotExistInChannelException();
+        if (!checkIfMemberExistInChannel(channel, member)) throw new MemberNotExistInChannelException();
         var messageList = channel.getMessageList()
                 .stream()
                 .filter(message -> message.getAccessMembersList().contains(memberName))

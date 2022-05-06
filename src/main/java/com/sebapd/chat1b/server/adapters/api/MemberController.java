@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path( "member")
 public class MemberController {
@@ -48,6 +47,7 @@ public class MemberController {
         memberService.removeChatMemberByName(memberName);
         return Response.status(Response.Status.OK).build();
     }
+
     @GET
     @Path("{name}")
     public Response checkIfMemberExist(@PathParam("name") String memberName){

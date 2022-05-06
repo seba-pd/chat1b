@@ -35,11 +35,11 @@ public class FileController {
         return Response.status(Response.Status.CREATED).build();
     }
 
-    @Path("{channelName}/{memberName}/{fileName}")
+    @Path("{channelName}/{fileName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response receiveFile(@PathParam("channelName") String channelName,
-                                @PathParam("memberName") String memberName,
+                                @QueryParam("memberName") String memberName,
                                 @PathParam("fileName") String fileName) {
         File file ;
         try {
