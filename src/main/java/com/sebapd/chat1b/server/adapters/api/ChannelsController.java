@@ -25,7 +25,7 @@ public class ChannelsController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addChannel(ChannelDto channelDto){
         try {
-            channelsService.addChannel(channelDto.getChannelName());
+            channelsService.addChannel(restChannelMapper.toDomain(channelDto));
         } catch (ChannelAlreadyExistException e) {
             return Response.status(Response.Status.CREATED).entity(e.getMessage()).build();
         }

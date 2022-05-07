@@ -14,6 +14,7 @@ import com.sebapd.chat1b.server.ports.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
+import java.util.LinkedList;
 import java.util.List;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)

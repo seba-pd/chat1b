@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ChannelsService {
 
-    void addChannel(String channelName);
+    void addChannel(Channel channel);
     void deleteChannel(String channelName);
     List<Channel> getChannelList();
 }

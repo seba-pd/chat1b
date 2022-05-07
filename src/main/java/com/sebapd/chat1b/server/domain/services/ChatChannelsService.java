@@ -2,17 +2,12 @@ package com.sebapd.chat1b.server.domain.services;
 
 import com.sebapd.chat1b.server.domain.Channel;
 import com.sebapd.chat1b.server.domain.exceptions.ChannelAlreadyExistException;
-import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
 import com.sebapd.chat1b.server.ports.ChannelsRepository;
 import com.sebapd.chat1b.server.ports.ChannelsService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class ChatChannelsService implements ChannelsService {
@@ -20,14 +15,9 @@ public class ChatChannelsService implements ChannelsService {
     private final ChannelsRepository channelsRepository;
 
     @Override
-    public void addChannel(String name) {
-        if (!channelAlreadyExist(name)) {
-            channelsRepository.addChannel(
-                    Channel.builder()
-                            .channelId(UUID.randomUUID())
-                            .channelName(name)
-                            .channelMembers(new LinkedList<>())
-                            .build());
+    public void addChannel(Channel channel) {
+        if (!channelAlreadyExist(channel.getChannelName())) {
+            channelsRepository.addChannel(channel);
         } else {
             throw new ChannelAlreadyExistException();
         }
