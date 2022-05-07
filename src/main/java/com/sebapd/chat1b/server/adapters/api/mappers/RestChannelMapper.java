@@ -17,12 +17,7 @@ public interface RestChannelMapper {
 
     ChannelDto toDto(Channel channel);
     @Mapping(target = "channelId", expression = "java(java.util.UUID.randomUUID())")
-    @Mapping(target = "channelMembers", qualifiedByName = "newLinkedArray")
     Channel toDomain(ChannelDto channelDto);
 
-    @Named("newLinkedArray")
-    static LinkedList<Member> newLinkedList(){
-        return new LinkedList<>();
-    }
 
 }

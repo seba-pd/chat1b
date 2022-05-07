@@ -8,12 +8,13 @@ import com.sebapd.chat1b.server.domain.Member;
 import com.sebapd.chat1b.server.domain.Member.MemberBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-07T00:20:23+0200",
+    date = "2022-05-07T08:50:41+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
@@ -42,9 +43,10 @@ public class RestChannelMapperImpl implements RestChannelMapper {
 
         ChannelBuilder channel = Channel.builder();
 
-        channel.channelId( channelDto.getChannelId() );
         channel.channelMembers( memberDtoListToMemberList( channelDto.getChannelMembers() ) );
         channel.channelName( channelDto.getChannelName() );
+
+        channel.channelId( java.util.UUID.randomUUID() );
 
         return channel.build();
     }

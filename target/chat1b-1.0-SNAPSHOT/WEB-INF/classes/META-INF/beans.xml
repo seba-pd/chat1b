@@ -6,5 +6,6 @@
        bean-discovery-mode="all">
     <decorators>
         <class>com.sebapd.chat1b.server.domain.decorators.JmsChatMessageServiceDecorator</class>
+        <class>com.sebapd.chat1b.server.domain.decorators.JmsChatChannelServiceDecorator</class>
     </decorators>
 </beans>
