@@ -3,14 +3,12 @@ package com.sebapd.chat1b.server.adapters.persistent.mappers;
 import com.sebapd.chat1b.server.adapters.persistent.entities.MemberEntity;
 import com.sebapd.chat1b.server.domain.Member;
 import com.sebapd.chat1b.server.domain.Member.MemberBuilder;
-import java.time.Instant;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
 import javax.enterprise.context.ApplicationScoped;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-08T11:22:25+0200",
+    date = "2022-05-08T11:45:55+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.1 (Oracle Corporation)"
 )
 @ApplicationScoped
