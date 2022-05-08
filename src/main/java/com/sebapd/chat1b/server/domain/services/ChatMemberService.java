@@ -10,8 +10,10 @@ import com.sebapd.chat1b.server.ports.MemberService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
+@Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject )
 public class ChatMemberService implements MemberService {
 

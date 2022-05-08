@@ -22,7 +22,7 @@ public class Message implements Serializable {
     private Timestamp createTime;
     private List<String> accessMembersList;
 
-    public String messageToString() {
+    public String messageToJsonString() {
         return
                 "{\"memberName\" : \"" + memberName + "\",\"createTime\" : \"" + createTime.toString() + "\",\"channelName\" : \""
                         + channelName + "\"," + "\"content\" : \"" + content + "\"}";

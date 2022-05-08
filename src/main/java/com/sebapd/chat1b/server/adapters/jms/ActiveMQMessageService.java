@@ -19,7 +19,7 @@ public class ActiveMQMessageService implements JMSMessageService {
             Topic topic = session.createTopic(message.getChannelName());
 
             MessageProducer producer = session.createProducer(topic);
-            TextMessage messageToSend = session.createTextMessage(message.messageToString());
+            TextMessage messageToSend = session.createTextMessage(message.messageToJsonString());
             producer.send(messageToSend);
 
         } catch (JMSException e) {

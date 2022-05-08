@@ -11,18 +11,21 @@ import com.sebapd.chat1b.server.ports.ChannelRepository;
 import com.sebapd.chat1b.server.ports.ChannelService;
 import com.sebapd.chat1b.server.ports.ChannelsRepository;
 import com.sebapd.chat1b.server.ports.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.inject.Inject;
-import java.util.LinkedList;
+import javax.inject.Singleton;
 import java.util.List;
 
-@RequiredArgsConstructor(onConstructor_ = @Inject)
+@Singleton
+@AllArgsConstructor(onConstructor_ = @Inject)
+@NoArgsConstructor
 public class ChatChannelService implements ChannelService {
 
-    private final ChannelRepository channelRepository;
-    private final ChannelsRepository channelsRepository;
-    private final MemberRepository memberRepository;
+    private  ChannelRepository channelRepository;
+    private  ChannelsRepository channelsRepository;
+    private  MemberRepository memberRepository;
 
     @Override
     public void addMemberToChannel(String memberName, String channelName) {

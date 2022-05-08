@@ -14,10 +14,12 @@ import com.sebapd.chat1b.server.ports.JMSMessageService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
 
+@Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class ChatFileService implements FileService {
 

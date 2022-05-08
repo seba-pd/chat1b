@@ -7,8 +7,10 @@ import com.sebapd.chat1b.server.ports.ChannelsService;
 import lombok.RequiredArgsConstructor;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
+@Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class ChatChannelsService implements ChannelsService {
 
