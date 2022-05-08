@@ -30,7 +30,7 @@ public class ChannelController {
         try {
             channelService.addMemberToChannel(memberChannelDto.getMemberName(),
                     memberChannelDto.getChannelName());
-        } catch (MemberAlreadyExistInChannelException e) {
+        } catch (MemberAlreadyExistInChannelException | ChannelNotFoundException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
         return Response.status(Response.Status.CREATED).build();
