@@ -40,10 +40,7 @@ public class ChatMemberService implements MemberService {
 
     @Override
     public List<String> getMemberChannels(String memberName) {
-        var member = memberRepository.getChatMemberByName(memberName)
-                        .orElseThrow(MemberNotFoundException::new);
-        return channelsRepository.getChannelList().stream()
-                .filter(c -> c.getChannelMembers().contains(member))
+        return memberRepository.getMemberChannels(memberName).stream()
                 .map(Channel::getChannelName)
                 .toList();
     }

@@ -26,8 +26,7 @@ public class JpaChannelsRepository {
     }
 
     public List<ChannelEntity> getChannels() {
-        TypedQuery<ChannelEntity> query = entityManager.createQuery("select c from ChannelEntity c", ChannelEntity.class);
-        return query.getResultList();
+         return entityManager.createQuery("select c from ChannelEntity c", ChannelEntity.class).getResultList();
     }
 
     public Optional<ChannelEntity> getByName(String name) {

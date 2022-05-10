@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -15,4 +16,5 @@ public class Member {
     private UUID memberId;
     private String memberName;
     private Timestamp createTime;
+    private List<Channel> channelList;
 }
