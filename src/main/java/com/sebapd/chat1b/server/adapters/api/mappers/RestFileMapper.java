@@ -6,16 +6,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.time.Instant;
 import java.util.Base64;
+import java.util.UUID;
 
-@Mapper(componentModel = "cdi")
+@Mapper(componentModel = "cdi",imports = { UUID.class, Instant.class})
 public interface RestFileMapper {
 
+    @Mapping(target = "createTime", expression = "java(java.sql.Timestamp.from(Instant.now()))")
+    @Mapping(target = "fileId", expression = "java(java.util.UUID.randomUUID())")
     @Mapping(source = "content", target = "content", qualifiedByName = "contentToBytes")
     File toDomain(FileDto fileDto);
     @Mapping(source = "content", target = "content", qualifiedByName = "contentToString")
-    @Mapping(target = "createTime", expression = "java(java.sql.Timestamp.from(Instant.now()))")
-    @Mapping(target = "fileId", expression = "java(java.util.UUID.randomUUID())")
     FileDto toDto(File file);
 
     @Named("contentToBytes")

@@ -3,10 +3,7 @@ package com.sebapd.chat1b.server.adapters.api;
 import com.sebapd.chat1b.server.adapters.api.dtos.FileDto;
 import com.sebapd.chat1b.server.adapters.api.mappers.RestFileMapper;
 import com.sebapd.chat1b.server.domain.File;
-import com.sebapd.chat1b.server.domain.exceptions.ChannelNotFoundException;
-import com.sebapd.chat1b.server.domain.exceptions.FileNotFoundException;
-import com.sebapd.chat1b.server.domain.exceptions.MemberNotExistInChannelException;
-import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
+import com.sebapd.chat1b.server.domain.exceptions.*;
 import com.sebapd.chat1b.server.ports.FileService;
 
 import javax.inject.Inject;
@@ -39,10 +36,11 @@ public class FileController {
     public Response receiveFile(@PathParam("channelName") String channelName,
                                 @QueryParam("memberName") String memberName,
                                 @PathParam("fileName") String fileName) {
-        File file ;
+        File file;
         try {
             file = fileService.getFileByName(fileName, memberName, channelName);
-        } catch (FileNotFoundException | MemberNotFoundException | ChannelNotFoundException| MemberNotExistInChannelException e) {
+        } catch (FileNotFoundException | MemberNotFoundException |
+                ChannelNotFoundException | FileOrMemberNotExistInChannelException e) {
             return Response.status(Response.Status.OK).entity(e.getMessage()).build();
         }
         var responseFile = restFileMapper.toDto(file);
