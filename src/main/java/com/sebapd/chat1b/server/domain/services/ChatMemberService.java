@@ -1,8 +1,10 @@
 package com.sebapd.chat1b.server.domain.services;
 
+import com.sebapd.chat1b.server.domain.Channel;
 import com.sebapd.chat1b.server.domain.Member;
 import com.sebapd.chat1b.server.domain.exceptions.MemberAlreadyExistException;
 import com.sebapd.chat1b.server.domain.exceptions.MemberNotFoundException;
+import com.sebapd.chat1b.server.ports.ChannelsRepository;
 import com.sebapd.chat1b.server.ports.MemberRepository;
 import com.sebapd.chat1b.server.ports.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ChatMemberService implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final ChannelsRepository channelsRepository;
 
     @Override
     public void addChatMember(Member member) {
@@ -37,6 +40,11 @@ public class ChatMemberService implements MemberService {
 
     @Override
     public List<String> getMemberChannels(String memberName) {
-        return memberRepository.getMemberChannels(memberName);
+        var member = memberRepository.getChatMemberByName(memberName)
+                        .orElseThrow(MemberNotFoundException::new);
+        return channelsRepository.getChannelList().stream()
+                .filter(c -> c.getChannelMembers().contains(member))
+                .map(Channel::getChannelName)
+                .toList();
     }
 }

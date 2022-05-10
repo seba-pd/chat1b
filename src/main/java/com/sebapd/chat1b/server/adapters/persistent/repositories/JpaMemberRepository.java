@@ -1,13 +1,11 @@
 package com.sebapd.chat1b.server.adapters.persistent.repositories;
 
-import com.sebapd.chat1b.server.adapters.persistent.entities.ChannelEntity;
 import com.sebapd.chat1b.server.adapters.persistent.entities.MemberEntity;
 import lombok.Setter;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -26,7 +24,7 @@ public class JpaMemberRepository {
     public void delete(String memberName) {
         var memberEntity = getByName(memberName);
         memberEntity.ifPresent(entity -> {
-            entity.getChannelList()
+            entity.getChannelEntityList()
                     .forEach(c -> jpaChannelRepository.removeChannelMember(entity,c));
             entityManager.remove(entity);
         });
@@ -39,14 +37,5 @@ public class JpaMemberRepository {
         } catch (Exception e) {
             return Optional.empty();
         }
-    }
-
-    public List<String> getMemberChannelsNames(String memberName){
-        var channels =  entityManager.createQuery("select l from MemberEntity e JOIN e.channelList l where e.memberName like :memberName", ChannelEntity.class)
-                .setParameter("memberName", memberName)
-                .getResultList();
-        return channels.stream()
-                .map(ChannelEntity::getChannelName)
-                .toList();
     }
 }

@@ -23,6 +23,6 @@ public class MemberEntity {
     @Column(nullable = false)
     private Timestamp createTime;
     @ManyToMany(mappedBy = "channelMembers")
-    private List<ChannelEntity> channelList;
+    private List<ChannelEntity> channelEntityList;
 
 }
