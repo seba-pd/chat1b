@@ -41,11 +41,11 @@ public class ChatFileService implements FileService {
 
     @Override
     public File getFileByName(String fileName, String memberName, String channelName) {
-        var file = fileRepository.getFileByName(fileName)
-                .orElseThrow(FileNotFoundException::new);
         var channel = channelsRepository.getChannelByName(channelName)
                 .orElseThrow(ChannelNotFoundException::new);
-        if (ifMemberExistOnChannel(channel, memberName))
+        var file = fileRepository.getFileByName(fileName)
+                .orElseThrow(FileNotFoundException::new);
+        if (ifMemberExistOnChannel(channel, memberName) && ifFileExistOnChannel(channel,fileName))
             file.setContent(fileRepository.receiveContent(file.getContentLocation()));
         return file;
     }
@@ -72,5 +72,13 @@ public class ChatFileService implements FileService {
                 .map(Member::getMemberName)
                 .toList();
         return membersNames.contains(memberName);
+    }
+
+    private boolean ifFileExistOnChannel(Channel channel, String fileName){
+        var fileNames = channel.getFileList()
+                .stream()
+                .map(File::getFileName)
+                .toList();
+        return fileNames.contains(fileName);
     }
 }

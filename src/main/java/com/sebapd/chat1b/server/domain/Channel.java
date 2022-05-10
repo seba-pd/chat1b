@@ -17,5 +17,6 @@ public class Channel {
     private final List<Member> channelMembers;
     private final String channelName;
     private final List<Message> messageList;
+    private final List<File> fileList;
 
 }
