@@ -3,7 +3,6 @@ package com.sebapd.chat1b.server.adapters.persistent;
 import com.sebapd.chat1b.server.adapters.persistent.mappers.JpaPersistenceChannelMapper;
 import com.sebapd.chat1b.server.adapters.persistent.mappers.JpaPersistenceMemberMapper;
 import com.sebapd.chat1b.server.adapters.persistent.repositories.JpaMemberRepository;
-import com.sebapd.chat1b.server.domain.Channel;
 import com.sebapd.chat1b.server.domain.Member;
 import com.sebapd.chat1b.server.ports.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +37,7 @@ public class JpaMemberRepositoryAdapter implements MemberRepository {
         return optionalChatMemberEntity.map(jpaPersistenceMemberMapper::toDomain);
     }
 
-    public List<Channel> getMemberChannels(String memberName){
-        var channelEntities = jpaMemberRepository.getMemberChannels(memberName);
-        return channelEntities.stream().map(jpaPersistenceChannelMapper::toDomain).toList();
+    public List<String> getMemberChannels(String memberName){
+        return jpaMemberRepository.getMemberChannelsNames(memberName);
     }
 }

@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.nio.channels.Channel;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +41,12 @@ public class JpaMemberRepository {
         }
     }
 
-    public List<ChannelEntity> getMemberChannels(String memberName){
-        return entityManager.createQuery("select l from MemberEntity e JOIN e.channelList l", ChannelEntity.class).getResultList();
+    public List<String> getMemberChannelsNames(String memberName){
+        var channels =  entityManager.createQuery("select l from MemberEntity e JOIN e.channelList l where e.memberName like :memberName", ChannelEntity.class)
+                .setParameter("memberName", memberName)
+                .getResultList();
+        return channels.stream()
+                .map(ChannelEntity::getChannelName)
+                .toList();
     }
 }
