@@ -20,7 +20,6 @@ public class MemberController {
     private RestMemberMapper restMemberMapper;
 
     @POST
-    @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addChatMember(MemberDto memberDto){
         try {

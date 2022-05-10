@@ -23,7 +23,7 @@ public class ChannelController {
     @Inject
     private RestMessageMapper restMessageMapper;
 
-    @Path("add_member_to_channel")
+    @Path("member")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addMemberToChannel(MemberChannelDto memberChannelDto) {
@@ -53,7 +53,6 @@ public class ChannelController {
         return Response.status(Response.Status.OK).entity(messageDtoList).build();
     }
 
-    @Path("remove_member_from_channel")
     @DELETE
     public Response removeMemberFromChannel(@QueryParam("memberName") String memberName,
                                             @QueryParam("channelName") String channelName) {

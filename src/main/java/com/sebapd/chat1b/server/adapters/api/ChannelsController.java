@@ -21,7 +21,6 @@ public class ChannelsController {
     private RestChannelMapper restChannelMapper;
 
     @POST
-    @Path("add_channel")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addChannel(ChannelDto channelDto){
         try {

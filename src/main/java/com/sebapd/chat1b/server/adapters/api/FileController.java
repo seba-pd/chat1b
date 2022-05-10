@@ -22,7 +22,6 @@ public class FileController {
     @Inject
     private RestFileMapper restFileMapper;
 
-    @Path("send_file")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response sendFile(FileDto fileDto) {
