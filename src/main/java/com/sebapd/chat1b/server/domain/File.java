@@ -15,6 +15,7 @@ public class File {
     private String memberName;
     private String fileName;
     private String contentLocation;
+    private String channelName;
     @Setter
     private byte[] content;
     private Timestamp createTime;

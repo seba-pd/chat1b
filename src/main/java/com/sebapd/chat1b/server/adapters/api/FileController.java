@@ -25,9 +25,8 @@ public class FileController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response sendFile(FileDto fileDto) {
-        var file = restFileMapper.toDomain(fileDto);
         try {
-            fileService.saveFile(file.getFileName(), file.getMemberName(), file.getContent(), fileDto.getChannelName());
+            fileService.saveFile(restFileMapper.toDomain(fileDto));
         } catch (MemberNotFoundException | MemberNotExistInChannelException | ChannelNotFoundException e) {
             return Response.status(Response.Status.OK).entity(e.getMessage()).build();
         }

@@ -14,6 +14,8 @@ public interface RestFileMapper {
     @Mapping(source = "content", target = "content", qualifiedByName = "contentToBytes")
     File toDomain(FileDto fileDto);
     @Mapping(source = "content", target = "content", qualifiedByName = "contentToString")
+    @Mapping(target = "createTime", expression = "java(java.sql.Timestamp.from(Instant.now()))")
+    @Mapping(target = "fileId", expression = "java(java.util.UUID.randomUUID())")
     FileDto toDto(File file);
 
     @Named("contentToBytes")
